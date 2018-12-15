@@ -10,3 +10,11 @@ Not versioned in this repository to save place.
 
 - Paragon Shinbi: https://www.unrealengine.com/marketplace/paragon-shinbi
 - Infinity Blade Effects: https://www.unrealengine.com/marketplace/infinity-blade-effects
+
+## Download
+
+Here is the latest packaged version of this application for Windows:
+
+- [Download link](https://github.com/mklabs/UE4Gasp/releases/download/v0.0.1/UE4Gasp_Windows_x64.zip)
+
+All other downloads available on the [Releases](https://github.com/mklabs/UE4Gasp/releases) page.
