@@ -15,6 +15,6 @@ Not versioned in this repository to save place.
 
 Here is the latest packaged version of this application for Windows:
 
-- [Download link](https://github.com/mklabs/UE4Gasp/releases/download/v0.0.1/UE4Gasp_Windows_x64.zip)
+- [Download link](https://github.com/mklabs/UE4Gasp/releases/latest)
 
 All other downloads available on the [Releases](https://github.com/mklabs/UE4Gasp/releases) page.
