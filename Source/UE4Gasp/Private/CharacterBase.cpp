@@ -50,7 +50,6 @@ void ACharacterBase::BeginPlay()
 	// Setup Full Health Tag
 	if (AttributeSetBaseComponent->Health.GetCurrentValue() == AttributeSetBaseComponent->MaxHealth.GetCurrentValue())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Adding FullHealtGameplayTag"));
 		AddGameplayTag(FullHealthTag);
 	}
 }
@@ -144,7 +143,6 @@ void ACharacterBase::OnStaminaChanged(float Stamina, float MaxStamina)
 
 void ACharacterBase::OnMoveSpeedChanged(float MoveSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnMoveSpeedChanged, change MaxWalkSpped to: %f"), MoveSpeed);
 	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 	BP_OnMoveSpeedChanged(MoveSpeed);
 }

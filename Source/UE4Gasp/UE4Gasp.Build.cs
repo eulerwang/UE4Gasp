@@ -17,7 +17,8 @@ public class UE4Gasp : ModuleRules
             "CoreUObject",
             "Engine",
             "InputCore",
-            "HeadMountedDisplay"
+            "HeadMountedDisplay",
+            "NavigationSystem"
         });
     }
 }

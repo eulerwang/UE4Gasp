@@ -37,7 +37,6 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		float ClampedHealth = FMath::Clamp(Health.GetCurrentValue(), 0.0f, MaxHealth.GetCurrentValue());
 		Health.SetBaseValue(ClampedHealth);
 		Health.SetCurrentValue(ClampedHealth);
-		UE_LOG(LogTemp, Warning, TEXT("Health Changed in PostGameplayEffectExecute: %f / %f"), Health.GetCurrentValue(), MaxHealth.GetCurrentValue());
 		OnHealthChange.Broadcast(Health.GetCurrentValue(), MaxHealth.GetCurrentValue());
 
 		if (TargetCharacter)
@@ -59,7 +58,6 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		float ClampedMana = FMath::Clamp(Mana.GetCurrentValue(), 0.0f, MaxMana.GetCurrentValue());
 		Mana.SetBaseValue(ClampedMana);
 		Mana.SetCurrentValue(ClampedMana);
-		UE_LOG(LogTemp, Warning, TEXT("Mana Changed in PostGameplayEffectExecute: %f / %f"), Mana.GetCurrentValue(), MaxMana.GetCurrentValue());
 		OnManaChange.Broadcast(Mana.GetCurrentValue(), MaxMana.GetCurrentValue());
 	}
 
@@ -69,7 +67,6 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		float ClampedStamina = FMath::Clamp(Stamina.GetCurrentValue(), 0.0f, MaxStamina.GetCurrentValue());
 		Stamina.SetBaseValue(ClampedStamina);
 		Stamina.SetCurrentValue(ClampedStamina);
-		// UE_LOG(LogTemp, Warning, TEXT("Stamina Changed in PostGameplayEffectExecute: %f / %f"), Stamina.GetCurrentValue(), MaxStamina.GetCurrentValue());
 		OnStaminaChange.Broadcast(Stamina.GetCurrentValue(), MaxStamina.GetCurrentValue());
 	}
 
