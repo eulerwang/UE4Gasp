@@ -47,21 +47,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "CharacterBase")
 	void RemoveGameplayTag(FGameplayTag& TagToRemove);
 
-	// Called from RPGAttributeSet, these call BP events above
-	UFUNCTION(BlueprintCallable, Category = "CharacterBase")
-	void OnHealthChanged(float Health, float MaxHealth);
-
-	UFUNCTION(BlueprintCallable, Category = "CharacterBase")
-	void OnManaChanged(float Mana, float MaxMana);
-
-	UFUNCTION(BlueprintCallable, Category = "CharacterBase")
-	void OnStaminaChanged(float Stamina, float MaxStamina);
-
-	UFUNCTION(BlueprintCallable, Category = "CharacterBase")
-	void OnMoveSpeedChanged(float MoveSpeed);
-	
 	UFUNCTION(BlueprintCallable, Category = "CharacterBase")
 	bool IsOtherActorHostile(ACharacterBase* OtherActor) const;
+
+	// Called from RPGAttributeSet, these call BP events Below
+	void HandleHealthChanged(float Health, float MaxHealth);
+	void HandleManaChanged(float Mana, float MaxMana);
+	void HandleStaminaChanged(float Stamina, float MaxStamina);
+	void HandleMoveSpeedChanged(float MoveSpeed);
+	void HandleDamage(float Damage);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "CharacterBase", meta = (DisplayName = "OnHealthChanged"))
 	void BP_OnHealthChanged(float Health, float MaxHealth);
@@ -74,6 +68,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "CharacterBase", meta = (DisplayName = "OnMoveSpeedChanged"))
 	void BP_OnMoveSpeedChanged(float MoveSpeed);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "CharacterBase", meta = (DisplayName = "OnDamaged"))
+	void BP_OnDamaged(float Damage);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "CharacterBase", meta = (DisplayName = "OnDie"))
 	void BP_OnDie();

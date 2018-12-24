@@ -6,10 +6,6 @@
 #include "AttributeSet.h"
 #include "AttributeSetBase.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDelegateOnHealthChange, float, Health, float, MaxHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDelegateOnManaChange, float, Mana, float, MaxMana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDelegateOnStaminaChange, float, Stamina, float, MaxStamina);
-
 /**
  * Base Attributes Stats.
  */
@@ -44,8 +40,4 @@ public:
 	FGameplayAttributeData MoveSpeed;
 
 	void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data);
-
-	FDelegateOnHealthChange OnHealthChange;
-	FDelegateOnManaChange OnManaChange;
-	FDelegateOnStaminaChange OnStaminaChange;
 };

@@ -26,7 +26,7 @@ public:
 	void PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn, int32 MaxSpawn, float MinScale = 1.0f, float MaxScale = 1.0f, float Radius = 500.0f);
 
 	UFUNCTION(BlueprintCallable, Category = "Tile")
-	void PlaceAIPawns(TSubclassOf<APawn> ToSpawn, int32 MinSpawn, int32 MaxSpawn, float Radius = 500.0f);
+	void PlaceAIPawns(TArray<TSubclassOf<APawn>> AIsToSpawn, int32 MinSpawn, int32 MaxSpawn, float Radius = 500.0f);
 
 	UFUNCTION(BlueprintCallable, Category = "ActorPoolComponent")
 	void SetActorPoolComponent(UActorPoolComponent* InActorPoolComponent);

@@ -37,8 +37,9 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		float ClampedHealth = FMath::Clamp(Health.GetCurrentValue(), 0.0f, MaxHealth.GetCurrentValue());
 		Health.SetBaseValue(ClampedHealth);
 		Health.SetCurrentValue(ClampedHealth);
-		OnHealthChange.Broadcast(Health.GetCurrentValue(), MaxHealth.GetCurrentValue());
 
+		UE_LOG(LogTemp, Warning, TEXT("Health changed, magnitude: %f"), Data.EvaluatedData.Magnitude);
+		
 		if (TargetCharacter)
 		{
 			if (Health.GetCurrentValue() == MaxHealth.GetCurrentValue())
@@ -49,6 +50,13 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			{
 				TargetCharacter->RemoveGameplayTag(TargetCharacter->FullHealthTag);
 			}
+
+			TargetCharacter->HandleHealthChanged(Health.GetCurrentValue(), MaxHealth.GetCurrentValue());
+
+			if (Data.EvaluatedData.Magnitude < 0)
+			{
+				TargetCharacter->HandleDamage(Data.EvaluatedData.Magnitude);
+			}
 		}
 	}
 
@@ -58,7 +66,10 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		float ClampedMana = FMath::Clamp(Mana.GetCurrentValue(), 0.0f, MaxMana.GetCurrentValue());
 		Mana.SetBaseValue(ClampedMana);
 		Mana.SetCurrentValue(ClampedMana);
-		OnManaChange.Broadcast(Mana.GetCurrentValue(), MaxMana.GetCurrentValue());
+		if (TargetCharacter)
+		{
+			TargetCharacter->HandleManaChanged(Mana.GetCurrentValue(), MaxMana.GetCurrentValue());
+		}
 	}
 
 	// Stamina
@@ -67,17 +78,18 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		float ClampedStamina = FMath::Clamp(Stamina.GetCurrentValue(), 0.0f, MaxStamina.GetCurrentValue());
 		Stamina.SetBaseValue(ClampedStamina);
 		Stamina.SetCurrentValue(ClampedStamina);
-		OnStaminaChange.Broadcast(Stamina.GetCurrentValue(), MaxStamina.GetCurrentValue());
+		if (TargetCharacter)
+		{
+			TargetCharacter->HandleStaminaChanged(Stamina.GetCurrentValue(), MaxStamina.GetCurrentValue());
+		}
 	}
 
 	// MoveSpeed
 	if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBase::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBase, MoveSpeed)))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("MoveSpeed Changed in PostGameplayEffectExecute: %f"), MoveSpeed.GetCurrentValue());
 		if (TargetCharacter)
 		{
-			// Call for all movespeed changes
-			TargetCharacter->OnMoveSpeedChanged(MoveSpeed.GetCurrentValue());
+			TargetCharacter->HandleMoveSpeedChanged(MoveSpeed.GetCurrentValue());
 		}
 	}
 }

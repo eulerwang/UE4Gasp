@@ -69,7 +69,7 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn, int32 MaxSp
 	}
 }
 
-void ATile::PlaceAIPawns(TSubclassOf<APawn> ToSpawn, int32 MinSpawn, int32 MaxSpawn, float Radius)
+void ATile::PlaceAIPawns(TArray<TSubclassOf<APawn>> AIsToSpawn, int32 MinSpawn, int32 MaxSpawn, float Radius)
 {
 	FBox Bounds = FBox(MinExtent, MaxExtent);
 	int32 NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
@@ -81,7 +81,12 @@ void ATile::PlaceAIPawns(TSubclassOf<APawn> ToSpawn, int32 MinSpawn, int32 MaxSp
 		bool CanSpawn = FindEmptyLocation(SpawnPosition.Location, Radius, Bounds);
 		if (CanSpawn)
 		{
-			PlaceAIPawn(ToSpawn, SpawnPosition);
+			int32 RandomSpawnIndex = FMath::RandRange(0, AIsToSpawn.Num() - 1);
+			TSubclassOf<APawn> ToSpawn = AIsToSpawn[RandomSpawnIndex];
+			if (ToSpawn)
+			{
+				PlaceAIPawn(ToSpawn, SpawnPosition);
+			}
 		}
 	}
 }
@@ -116,7 +121,7 @@ void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition
 void ATile::PlaceAIPawn(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition)
 {
 	FRotator Rotation = FRotator(0, FMath::RandRange(-180.0f, 180.0f), 0);
-	APawn* SpawnedPawn = GetWorld()->SpawnActor<APawn>(ToSpawn, SpawnPosition.Location, Rotation);
+	APawn* SpawnedPawn = GetWorld()->SpawnActor<APawn>(ToSpawn, SpawnPosition.Location + FVector(0.0f, 0.0f, 100.0f), Rotation);
 	if (!SpawnedPawn)
 	{
 		return;

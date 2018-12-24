@@ -42,9 +42,6 @@ void ACharacterBase::AutoDetermineTeamIdByController()
 void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	AttributeSetBaseComponent->OnHealthChange.AddDynamic(this, &ACharacterBase::OnHealthChanged);
-	AttributeSetBaseComponent->OnManaChange.AddDynamic(this, &ACharacterBase::OnManaChanged);
-	AttributeSetBaseComponent->OnStaminaChange.AddDynamic(this, &ACharacterBase::OnStaminaChanged);
 	AutoDetermineTeamIdByController();
 
 	// Setup Full Health Tag
@@ -115,7 +112,7 @@ void ACharacterBase::RemoveGameplayTag(FGameplayTag& TagToRemove)
 	GetAbilitySystemComponent()->RemoveLooseGameplayTag(TagToRemove);
 }
 
-void ACharacterBase::OnHealthChanged(float Health, float MaxHealth)
+void ACharacterBase::HandleHealthChanged(float Health, float MaxHealth)
 {
 	if (Health <= 0 && !bIsDead)
 	{
@@ -126,12 +123,12 @@ void ACharacterBase::OnHealthChanged(float Health, float MaxHealth)
 	BP_OnHealthChanged(Health, MaxHealth);
 }
 
-void ACharacterBase::OnManaChanged(float Mana, float MaxMana)
+void ACharacterBase::HandleManaChanged(float Mana, float MaxMana)
 {
 	BP_OnManaChanged(Mana, MaxMana);
 }
 
-void ACharacterBase::OnStaminaChanged(float Stamina, float MaxStamina)
+void ACharacterBase::HandleStaminaChanged(float Stamina, float MaxStamina)
 {
 	if (Stamina <= 0)
 	{
@@ -141,10 +138,15 @@ void ACharacterBase::OnStaminaChanged(float Stamina, float MaxStamina)
 	BP_OnStaminaChanged(Stamina, MaxStamina);
 }
 
-void ACharacterBase::OnMoveSpeedChanged(float MoveSpeed)
+void ACharacterBase::HandleMoveSpeedChanged(float MoveSpeed)
 {
 	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 	BP_OnMoveSpeedChanged(MoveSpeed);
+}
+
+void ACharacterBase::HandleDamage(float Damage)
+{
+	BP_OnDamaged(Damage);
 }
 
 bool ACharacterBase::IsOtherActorHostile(ACharacterBase* OtherActor) const
